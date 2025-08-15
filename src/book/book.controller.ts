@@ -13,6 +13,8 @@ import {
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { Book } from './interfaces/Book.interface';
+import { CreateBookDto } from './dto/create-book.dto';
+import { UpdateBookDto } from './dto/update-book.dto';
 
 @Controller('book')
 export class BookController {
@@ -37,7 +39,7 @@ export class BookController {
   @HttpCode(HttpStatus.CREATED)
   createBook(
     @Body()
-    bookData: Omit<Book, 'id'>,
+    bookData: CreateBookDto,
   ) {
     this.bookService.create(bookData);
   }
@@ -47,7 +49,7 @@ export class BookController {
     @Param('id', ParseIntPipe)
     id: number,
     @Body()
-    updatedBook: Partial<Omit<Book, 'id'>>,
+    updatedBook: UpdateBookDto,
   ) {
     this.bookService.updateBook(id, updatedBook);
   }
